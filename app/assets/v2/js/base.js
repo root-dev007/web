@@ -256,141 +256,112 @@ const _alert = function(msg, _class, remove_after_ms) {
 
 };
 
-var show_persona_modal = function(e) {
-  const content = $.parseHTML(
-    `<div id="persona_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content px-4 py-3">
-          <div class="col-12">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="col-12 pt-2 pb-2 text-center">
-            <img src="${static_url}v2/images/modals/persona-choose.svg" width="160" height="137">
-            <h2 class="font-title mt-4">${gettext('Are you a Funder or a Contributor?')}</h2>
-          </div>
-          <div class="col-12 pt-2 text-center">
-            <p class="mb-0">${gettext('Let us know so we could optimize the <br>best experience for you!')}</p>
-          </div>
-          <div class="col-12 my-4 text-center">
-            <button type="button" class="btn btn-gc-blue px-5 mb-2 mx-2" data-persona="persona_is_funder">I'm a Funder</button>
-            <button type="button" class="btn btn-gc-blue px-5 mx-2" data-persona="persona_is_hunter">I'm a Contributor</button>
-          </div>
-        </div>
-      </div>
-    </div>`);
+// if (
+//   document.contxt.github_handle &&
+//   !document.contxt.persona_is_funder &&
+//   !document.contxt.persona_is_hunter
+// ) {
+//   show_persona_modal();
+// }
 
-  $(content).appendTo('body');
-  $('#persona_modal').bootstrapModal('show');
-};
+// $('body').on('click', '[data-persona]', function(e) {
+//   sendPersonal($(this).data('persona'));
+// });
 
-if (
-  document.contxt.github_handle &&
-  !document.contxt.persona_is_funder &&
-  !document.contxt.persona_is_hunter
-) {
-  show_persona_modal();
-}
+// const sendPersonal = (persona) => {
+//   let postPersona = fetchData('/api/v0.1/choose_persona/', 'POST',
+//     {persona, 'access_token': document.contxt.access_token}
+//   );
 
-$('body').on('click', '[data-persona]', function(e) {
-  sendPersonal($(this).data('persona'));
-});
+//   $.when(postPersona).then((response, status, statusCode) => {
+//     if (statusCode.status != 200) {
+//       return _alert(response.msg, 'error');
+//     }
+//     $('#persona_modal').bootstrapModal('hide');
 
-const sendPersonal = (persona) => {
-  let postPersona = fetchData('/api/v0.1/choose_persona/', 'POST',
-    {persona, 'access_token': document.contxt.access_token}
-  );
+//     const urls = [
+//       {
+//         url: '/hackathon/onboard'
+//       },
+//       {
+//         url: '/profile'
+//       }
+//     ];
 
-  $.when(postPersona).then((response, status, statusCode) => {
-    if (statusCode.status != 200) {
-      return _alert(response.msg, 'error');
-    }
-    $('#persona_modal').bootstrapModal('hide');
+//     const checkUrlRedirect = (arr, val) => {
+//       return arr.all(arrObj => {
+//         if (val.indexOf(arrObj.url) == -1) {
+//           return true;
+//         }
+//         return false;
+//       });
+//     };
 
-    const urls = [
-      {
-        url: '/hackathon/onboard'
-      },
-      {
-        url: '/profile'
-      }
-    ];
+//     if (response.persona === 'persona_is_funder') {
+//       if (checkUrlRedirect(urls, document.location.href)) {
+//         window.location = '/onboard/funder';
+//       } else {
+//         return _alert(gettext('Thanks, you can read the guide <a href="/how/funder">here.</a>'), 'info');
+//       }
 
-    const checkUrlRedirect = (arr, val) => {
-      return arr.all(arrObj => {
-        if (val.indexOf(arrObj.url) == -1) {
-          return true;
-        }
-        return false;
-      });
-    };
+//     } else if (response.persona === 'persona_is_hunter') {
+//       if (checkUrlRedirect(urls, document.location.href)) {
+//         window.location = '/onboard/contributor';
+//       } else {
+//         return _alert(gettext('Thanks, you can read the guide <a href="/how/contributor">here.</a>'), 'info');
+//       }
+//     }
 
-    if (response.persona === 'persona_is_funder') {
-      if (checkUrlRedirect(urls, document.location.href)) {
-        window.location = '/onboard/funder';
-      } else {
-        return _alert(gettext('Thanks, you can read the guide <a href="/how/funder">here.</a>'), 'info');
-      }
-
-    } else if (response.persona === 'persona_is_hunter') {
-      if (checkUrlRedirect(urls, document.location.href)) {
-        window.location = '/onboard/contributor';
-      } else {
-        return _alert(gettext('Thanks, you can read the guide <a href="/how/contributor">here.</a>'), 'info');
-      }
-    }
-
-  });
-};
+//   });
+// };
 
 
-const gitcoinUpdates = () => {
-  const urlUpdates = `https://api.github.com/repos/gitcoinco/web/issues/5057?access_token=${document.contxt.access_token}`;
+// const gitcoinUpdates = () => {
+//   const urlUpdates = `https://api.github.com/repos/gitcoinco/web/issues/5057?access_token=${document.contxt.access_token}`;
 
-  const getUpdates = fetchData (urlUpdates, 'GET');
+//   const getUpdates = fetchData (urlUpdates, 'GET');
 
-  $.when(getUpdates).then(response => {
+//   $.when(getUpdates).then(response => {
 
-    const content = $.parseHTML(
-      `<div id="gitcoin_updates" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content px-4 py-3">
-            <div class="col-12">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="col-12 pt-2 pb-2 text-center">
-              <img src="${static_url}v2/images/modals/persona-choose.svg" width="160" height="137">
-              <h2 class="mt-4">${response.title}</h2>
-            </div>
-            <div class="col-12 pt-2 dynamic-content">
-              ${response.body}
-            </div>
-            <div class="col-12 my-4 d-flex justify-content-around">
-              <button type="button" class="btn btn-gc-blue" data-dismiss="modal" aria-label="Close">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>`);
+//     const content = $.parseHTML(
+//       `<div id="gitcoin_updates" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+//         <div class="modal-dialog modal-lg">
+//           <div class="modal-content px-4 py-3">
+//             <div class="col-12">
+//               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+//                 <span aria-hidden="true">&times;</span>
+//               </button>
+//             </div>
+//             <div class="col-12 pt-2 pb-2 text-center">
+//               <img src="${static_url}v2/images/modals/persona-choose.svg" width="160" height="137">
+//               <h2 class="mt-4">${response.title}</h2>
+//             </div>
+//             <div class="col-12 pt-2 dynamic-content">
+//               ${response.body}
+//             </div>
+//             <div class="col-12 my-4 d-flex justify-content-around">
+//               <button type="button" class="btn btn-gc-blue" data-dismiss="modal" aria-label="Close">Close</button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>`);
 
-    $(content).appendTo('body');
-    $('#gitcoin_updates').bootstrapModal('show');
-  });
+//     $(content).appendTo('body');
+//     $('#gitcoin_updates').bootstrapModal('show');
+//   });
 
-  $(document, '#gitcoin_updates').on('hidden.bs.modal', function(e) {
-    $('#gitcoin_updates').remove();
-    $('#gitcoin_updates').bootstrapModal('dispose');
-  });
+//   $(document, '#gitcoin_updates').on('hidden.bs.modal', function(e) {
+//     $('#gitcoin_updates').remove();
+//     $('#gitcoin_updates').bootstrapModal('dispose');
+//   });
 
-};
+// };
 
 // carousel/collabs/... inside menu
-$(document).on('click', '.gc-megamenu .dropdown-menu', function(e) {
-  e.stopPropagation();
-});
+// $(document).on('click', '.gc-megamenu .dropdown-menu', function(e) {
+//   e.stopPropagation();
+// });
 
-if (document.contxt.chat_unread_messages) {
-  $('#chat-notification-dot').addClass('notification__dot__active');
-}
+// if (document.contxt.chat_unread_messages) {
+//   $('#chat-notification-dot').addClass('notification__dot__active');
+// }
