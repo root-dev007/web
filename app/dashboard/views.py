@@ -827,49 +827,23 @@ def onboard_avatar(request):
 
 def onboard(request, flow=None):
     """Handle displaying the first time user experience flow."""
-    if flow not in ['funder', 'contributor', 'profile']:
-        if not request.user.is_authenticated:
-            raise Http404
-        target = 'funder' if request.user.profile.persona_is_funder else 'contributor'
-        new_url = f'/onboard/{target}'
-        return redirect(new_url)
-    elif flow == 'funder':
+    if flow == 'funder':
         onboard_steps = ['github', 'metamask', 'avatar']
     elif flow == 'contributor':
         onboard_steps = ['github', 'metamask', 'avatar', 'skills', 'job']
     elif flow == 'profile':
         onboard_steps = ['avatar']
 
-    profile = None
-    if request.user.is_authenticated and getattr(request.user, 'profile', None):
-        profile = request.user.profile
-
-    steps = []
+    steps = ['avatar']
     if request.GET:
         steps = request.GET.get('steps', [])
         if steps:
             steps = steps.split(',')
 
-    if (steps and 'github' not in steps) or 'github' not in onboard_steps:
-        if not request.user.is_authenticated or request.user.is_authenticated and not getattr(
-            request.user, 'profile', None
-        ):
-            login_redirect = redirect('/login/github?next=' + request.get_full_path())
-            return login_redirect
-
-    if request.POST.get('eth_address') and request.user.is_authenticated and getattr(request.user, 'profile', None):
-        profile = request.user.profile
-        eth_address = request.GET.get('eth_address')
-        valid_address = is_valid_eth_address(eth_address)
-        if valid_address:
-            profile.preferred_payout_address = eth_address
-            profile.save()
-        return JsonResponse({'OK': True})
-
-    theme = request.GET.get('theme', '3d')
+    theme = request.GET.get('theme', 'bufficorn')
     from avatar.views_3d import get_avatar_attrs
-    skin_tones = get_avatar_attrs(theme, 'skin_tones')
-    hair_tones = get_avatar_attrs(theme, 'hair_tones')
+    skin_tones = get_avatar_attrs('bufficorn', 'skin_tones')
+    hair_tones = get_avatar_attrs('bufficorn', 'hair_tones')
     avatar_options = [
         ('classic', '/onboard/profile?steps=avatar&theme=classic'),
         ('3d', '/onboard/profile?steps=avatar&theme=3d'),
@@ -878,17 +852,15 @@ def onboard(request, flow=None):
     ]
 
     params = {
-        'title': _('Onboarding Flow'),
+        'title': _('EthDenver bufficorn avatar builder'),
         'steps': steps or onboard_steps,
         'flow': flow,
-        'profile': profile,
         'theme': theme,
         'avatar_options': avatar_options,
-        '3d_avatar_params': None if 'avatar' not in steps else avatar3dids_helper(theme),
+        '3d_avatar_params': None if 'avatar' not in steps else avatar3dids_helper('bufficorn'),
         'possible_skin_tones': skin_tones,
         'possible_hair_tones': hair_tones,
     }
-    params.update(get_avatar_context_for_user(request.user))
     return TemplateResponse(request, 'ftux/onboard.html', params)
 
 

@@ -74,6 +74,8 @@ urlpatterns = [
     # board
     re_path(r'^dashboard/?', dashboard.views.board, name='dashboard'),
 
+    re_path(r'^$', dashboard.views.onboard, name='index'),
+
     # kudos
     re_path(r'^kudos/?$', kudos.views.about, name='kudos_main'),
     re_path(r'^kudos/about/?$', kudos.views.about, name='kudos_about'),
@@ -369,7 +371,7 @@ urlpatterns = [
     re_path(r'^results/?', retail.views.results, name='results'),
     re_path(r'^activity/?', retail.views.activity, name='activity'),
     re_path(r'^townsquare/?', townsquare.views.town_square, name='townsquare'),
-    re_path(r'^$', townsquare.views.index, name='index'),
+    # re_path(r'^$', townsquare.views.index, name='index'),
     path('action/<int:offer_id>/<slug:offer_slug>/go', townsquare.views.offer_go, name='townsquare_offer_go'),
     path('action/new', townsquare.views.offer_new, name='townsquare_offer_new'),
     path(

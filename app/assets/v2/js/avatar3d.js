@@ -19,13 +19,8 @@ $(document).ready(function() {
     }
     url += '&skinTone=' + document.skin_tone;
     url += '&hairTone=' + document.hair_tone;
-    var theme = getParam('theme');
 
-    if (!theme) {
-      theme = '3d';
-    }
-    url += '&theme=' + theme;
-    console.log(theme);
+    url += '&theme=bufficorn';
     return url;
   };
 
