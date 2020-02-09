@@ -64,29 +64,29 @@ services:
           memory: 1024M
         reservations:
           memory: 512M
-  # nginx:
-  #   image: nginx:1.14.2-alpine
-  #   restart: always
-  #   container_name: nginx_server
-  #   depends_on:
-  #     - web
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - .:/code
-  #     - ./conf.d:/etc/nginx/conf.d/
-  #     - ./dhparam:/etc/nginx/dhparam
-  #     - ./certbot/conf/:/etc/nginx/ssl/
-  #     - ./certbot/data:/usr/share/nginx/html/letsencrypt
+  nginx:
+    image: nginx:1.14.2-alpine
+    restart: always
+    container_name: nginx_server
+    depends_on:
+      - web
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - .:/code
+      - ./conf.d:/etc/nginx/conf.d/
+      - ./dhparam:/etc/nginx/dhparam
+      - ./certbot/conf/:/etc/nginx/ssl/
+      - ./certbot/data:/usr/share/nginx/html/letsencrypt
 
-  # certbot:
-  #   image: certbot/certbot:latest
-  #   command: certonly --webroot --webroot-path=/usr/share/nginx/html/letsencrypt --email root_dev007@protonmail.com --agree-tos --no-eff-email -d avatar.ethdenver.com
-  #   volumes:
-  #     - ./certbot/conf/:/etc/letsencrypt
-  #     - ./certbot/logs/:/var/log/letsencrypt
-  #     - ./certbot/data:/usr/share/nginx/html/letsencrypt
+  certbot:
+    image: certbot/certbot:latest
+    command: certonly --webroot --webroot-path=/usr/share/nginx/html/letsencrypt --email root_dev007@protonmail.com --agree-tos --no-eff-email -d avatar.ethdenver.com
+    volumes:
+      - ./certbot/conf/:/etc/letsencrypt
+      - ./certbot/logs/:/var/log/letsencrypt
+      - ./certbot/data:/usr/share/nginx/html/letsencrypt
 
   testrpc:
     image: trufflesuite/ganache-cli
