@@ -1,3 +1,263 @@
+var ethdenver_abi = [
+  {
+    type: "function",
+    stateMutability: "view",
+    payable: false,
+    outputs: [{ type: "string", name: "" }],
+    name: "name",
+    inputs: [],
+    constant: true
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    payable: false,
+    outputs: [{ type: "bool", name: "" }],
+    name: "approve",
+    inputs: [
+      { type: "address", name: "spender" },
+      { type: "uint256", name: "value" }
+    ],
+    constant: false
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    payable: false,
+    outputs: [{ type: "uint256", name: "" }],
+    name: "totalSupply",
+    inputs: [],
+    constant: true
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    payable: false,
+    outputs: [{ type: "bool", name: "" }],
+    name: "transferFrom",
+    inputs: [
+      { type: "address", name: "from" },
+      { type: "address", name: "to" },
+      { type: "uint256", name: "value" }
+    ],
+    constant: false
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    payable: false,
+    outputs: [{ type: "bool", name: "" }],
+    name: "transferWithData",
+    inputs: [
+      { type: "address", name: "to" },
+      { type: "uint256", name: "value" },
+      { type: "bytes", name: "data" }
+    ],
+    constant: false
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    payable: false,
+    outputs: [{ type: "uint8", name: "" }],
+    name: "decimals",
+    inputs: [],
+    constant: true
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    payable: false,
+    outputs: [{ type: "bool", name: "" }],
+    name: "increaseAllowance",
+    inputs: [
+      { type: "address", name: "spender" },
+      { type: "uint256", name: "addedValue" }
+    ],
+    constant: false
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    payable: false,
+    outputs: [{ type: "bool", name: "" }],
+    name: "mint",
+    inputs: [
+      { type: "address", name: "to" },
+      { type: "uint256", name: "amount" }
+    ],
+    constant: false
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    payable: false,
+    outputs: [{ type: "address", name: "" }],
+    name: "vendingMachine",
+    inputs: [],
+    constant: true
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    payable: false,
+    outputs: [{ type: "uint256", name: "" }],
+    name: "balanceOf",
+    inputs: [{ type: "address", name: "owner" }],
+    constant: true
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    payable: false,
+    outputs: [],
+    name: "renounceOwnership",
+    inputs: [],
+    constant: false
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    payable: false,
+    outputs: [],
+    name: "changeVendingMachine",
+    inputs: [{ type: "address", name: "newVendingMachine" }],
+    constant: false
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    payable: false,
+    outputs: [{ type: "address", name: "" }],
+    name: "owner",
+    inputs: [],
+    constant: true
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    payable: false,
+    outputs: [{ type: "bool", name: "" }],
+    name: "isOwner",
+    inputs: [],
+    constant: true
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    payable: false,
+    outputs: [{ type: "string", name: "" }],
+    name: "symbol",
+    inputs: [],
+    constant: true
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    payable: false,
+    outputs: [{ type: "bool", name: "" }],
+    name: "burn",
+    inputs: [
+      { type: "address", name: "from" },
+      { type: "uint256", name: "value" }
+    ],
+    constant: false
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    payable: false,
+    outputs: [{ type: "bool", name: "" }],
+    name: "decreaseAllowance",
+    inputs: [
+      { type: "address", name: "spender" },
+      { type: "uint256", name: "subtractedValue" }
+    ],
+    constant: false
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    payable: false,
+    outputs: [{ type: "bool", name: "" }],
+    name: "transfer",
+    inputs: [
+      { type: "address", name: "to" },
+      { type: "uint256", name: "value" }
+    ],
+    constant: false
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    payable: false,
+    outputs: [{ type: "uint256", name: "" }],
+    name: "allowance",
+    inputs: [
+      { type: "address", name: "owner" },
+      { type: "address", name: "spender" }
+    ],
+    constant: true
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    payable: false,
+    outputs: [],
+    name: "transferOwnership",
+    inputs: [{ type: "address", name: "newOwner" }],
+    constant: false
+  },
+  {
+    type: "constructor",
+    stateMutability: "nonpayable",
+    payable: false,
+    inputs: [
+      { type: "string", name: "_name" },
+      { type: "string", name: "_symbol" }
+    ]
+  },
+  {
+    type: "event",
+    name: "TransferWithData",
+    inputs: [
+      { type: "address", name: "from", indexed: true },
+      { type: "address", name: "to", indexed: true },
+      { type: "uint256", name: "value", indexed: false },
+      { type: "bytes", name: "data", indexed: false }
+    ],
+    anonymous: false
+  },
+  {
+    type: "event",
+    name: "OwnershipTransferred",
+    inputs: [
+      { type: "address", name: "previousOwner", indexed: true },
+      { type: "address", name: "newOwner", indexed: true }
+    ],
+    anonymous: false
+  },
+  {
+    type: "event",
+    name: "Transfer",
+    inputs: [
+      { type: "address", name: "from", indexed: true },
+      { type: "address", name: "to", indexed: true },
+      { type: "uint256", name: "value", indexed: false }
+    ],
+    anonymous: false
+  },
+  {
+    type: "event",
+    name: "Approval",
+    inputs: [
+      { type: "address", name: "owner", indexed: true },
+      { type: "address", name: "spender", indexed: true },
+      { type: "uint256", name: "value", indexed: false }
+    ],
+    anonymous: false
+  }
+];
 $(document).ready(function() {
   $("#theme").on("change", function(e) {
     e.preventDefault();
@@ -111,6 +371,29 @@ $(document).ready(function() {
     });
   });
 
+  const transferEthDenverAsset = (account) => {
+    let amount = 10;
+    let token = new web3.eth.Contract(
+      ethdenver_abi.abi,
+      "0x3E50BF6703Fc132A94E4BAfF068db2055655f11B"
+    );
+    token.methods
+      .transfer(account, web3.utils.toTwosComplement(amount))
+      .send({
+        from: account
+      })
+      .on("error", function(error) {
+        _alert(
+          {
+            message: gettext(
+              "Could not transfer token to you at this time. Please try again."
+            )
+          },
+          "error"
+        );
+      });
+  };
+
   async function save3DAvatarTo3Box() {
     var repoPath = `ipfs-${Math.random()}`;
     var ipfs = await Ipfs.create({ repo: repoPath });
@@ -153,7 +436,7 @@ $(document).ready(function() {
                   let text = gettext(
                     "Error occurred while saving. Please try again."
                   );
-                  console.log('IPFS error ', err)
+                  console.log("IPFS error ", err);
                   _alert({ message: text }, "error");
                 } else {
                   box.public
@@ -176,6 +459,7 @@ $(document).ready(function() {
                           },
                           "success"
                         );
+                        transferEthDenverAsset(accounts[0])
                         box.close();
                       });
                     });

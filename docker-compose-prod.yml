@@ -65,6 +65,7 @@ services:
         reservations:
           memory: 512M
   nginx:
+    image: nginx:1.14.2-alpine
     restart: always
     container_name: nginx_server
     build:
